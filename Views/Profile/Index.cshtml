@@ -1,0 +1,209 @@
+﻿@model WebMedicalNew.Profile
+@{
+    ViewBag.Title = "My Profile";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    if (Login.usertype == 1)
+    {
+        <div class="form-horizontal">
+
+            <div class="form-group">
+                <h2>My Profile</h2>
+                <table align="left" style="width:60%">
+                    <caption>Account Infos</caption>
+                    <tr>
+                        <td style="width:25%">
+                            @Html.LabelFor(m => m.Username)<br />
+                            @Html.TextBoxFor(m => m.Username, new { style = "width:55%;", @readonly = "readonly" })<br /><br />
+                        </td>
+                        <td style="width:25%">
+                            @Html.LabelFor(m => m.Password)<br />
+                            @Html.TextBoxFor(m => m.Password, new { style = "width:55%;", @readonly = "readonly" })<br /><br />
+
+                        </td>
+                    </tr>
+                </table>
+                <table align="right" style="width:40%">
+                    <caption>Contact Infos</caption>
+                    <tr>
+                        <td style="width:25%">
+                            @Html.LabelFor(m => m.Email)<br />
+                            @Html.TextBoxFor(m => m.Email, new { style = "width:80%;", @readonly = "readonly" })<br /><br />
+                            @Html.LabelFor(m => m.OfficeAddress)<br />
+                            @Html.TextBoxFor(m => m.OfficeAddress, new { style = "width:80%;" })<br /><br />
+                            @Html.LabelFor(m => m.OfficeZipCode)<br />
+                            @Html.TextBoxFor(m => m.OfficeZipCode, new { style = "width:80%;" })<br /><br />
+
+
+                        </td>
+                        <td style="width:25%">
+                            @Html.LabelFor(m => m.Mobile)<br />
+                            @Html.TextBoxFor(m => m.Mobile, new { style = "width:80%;" })<br /><br />
+                            @Html.LabelFor(m => m.OfficeCity)<br />
+                            @Html.TextBoxFor(m => m.OfficeCity, new { style = "width:80%;" })<br /><br />
+                            @Html.LabelFor(m => m.OfficePhone)<br />
+                            @Html.TextBoxFor(m => m.OfficePhone, new { style = "width:80%;" })<br /><br />
+
+
+                        </td>
+                    </tr>
+                </table>
+                <table align="left" style="width:60%">
+                    <caption>Personal Infos</caption>
+                    <tr>
+                        <td style="width:25%">
+                            @Html.LabelFor(m => m.FirstName)<br />
+                            @Html.TextBoxFor(m => m.FirstName, new { style = "width:55%;" })<br /><br />
+                            @Html.LabelFor(m => m.FatherName)<br />
+                            @Html.TextBoxFor(m => m.FatherName, new { style = "width:55%;" })<br /><br />
+                            @Html.LabelFor(m => m.Gender)<br />
+                            @Html.DropDownListFor(m => m.Gender, new SelectList(Model.Gender, "gender_id", "gender_descr"), "Select Gender", new { onchange = "ddListChangeGender()" })<br /><br />
+                            @Html.HiddenFor(m => m.selected_gen_id, new { @id = "gender_id" })
+
+                        </td>
+                        <td style="width:25%">
+                            @Html.LabelFor(m => m.LastName)<br />
+                            @Html.TextBoxFor(m => m.LastName, new { style = "width:55%;" })<br /><br />
+                            @Html.LabelFor(m => m.DateOfBirth)<br />
+                            @Html.TextBoxFor(m => m.DateOfBirth, new { style = "width:55%;", placeholder = "dd/MM/yyyy" })<br /><br />
+                            @Html.LabelFor(m => m.DocCategories)<br />
+                            @Html.DropDownListFor(m => m.DocCategories, new SelectList(Model.DocCategories, "cat_id", "cat_descr"), "Select Doctor Category", new { style = "width:55%;", onchange = "ddListChangeDoc()" })<br /><br />
+                            @Html.HiddenFor(m => m.selected_doc_cat, new { @id = "doc_cat_id" })
+                        </td>
+                    </tr>
+                </table>
+                <table align="right" style="width:40%">
+                    <caption>Education Infos</caption>
+                    <tr>
+                        <td style="width:25%">
+                            @Html.LabelFor(m => m.DoctorBachelor)<br />
+                            @Html.TextBoxFor(m => m.DoctorBachelor, new { style = "width:80%;" })<br /><br />
+                            @Html.LabelFor(m => m.DoctorPHD)<br />
+                            @Html.TextBoxFor(m => m.DoctorPHD, new { style = "width:80%;" })<br /><br />
+                            @Html.LabelFor(m => m.DoctorMaster)<br />
+                            @Html.TextBoxFor(m => m.DoctorMaster, new { style = "width:80%;" })<br /><br />
+                        </td>
+                        <td style="width:25%">
+                        </td>
+                    </tr>
+                </table>
+
+                @Html.LabelFor(m => m.AdditionalInfos)<br />
+                @Html.TextAreaFor(m => m.AdditionalInfos, new { style = "width:100%;" })<br /><br />>
+            </div>
+            <div class="form-group">
+                <div class="text-center">
+                    <button class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span>&nbsp;&nbsp;Submit Changes</button>
+                    @*<input type="submit" value="Submit" class="btn btn-success" />*@
+                </div>
+            </div>
+
+        </div>
+    }
+    else if (Login.usertype == 2)
+    {
+        <div class="form-horizontal">
+
+            <div class="form-group">
+                <h2>My Profile</h2>
+                <table align="left" style="width:60%">
+                    <caption>Account Infos</caption>
+                    <tr>
+                        <td style="width:25%">
+                            @Html.LabelFor(m => m.Username)<br />
+                            @Html.TextBoxFor(m => m.Username, new { style = "width:55%;", @readonly = "readonly" })<br /><br />
+                        </td>
+                        <td style="width:25%">
+                            @Html.LabelFor(m => m.Password)<br />
+                            @Html.TextBoxFor(m => m.Password, new { style = "width:55%;", @readonly = "readonly" })<br /><br />
+
+                        </td>
+                    </tr>
+                </table>
+                <table align="right" style="width:40%">
+                    <caption>Contact Infos</caption>
+                    <tr>
+                        <td style="width:25%">
+                            @Html.LabelFor(m => m.Email)<br />
+                            @Html.TextBoxFor(m => m.Email, new { style = "width:80%;", @readonly = "readonly" })<br /><br />
+                            @Html.LabelFor(m => m.StreetName)<br />
+                            @Html.TextBoxFor(m => m.StreetName, new { style = "width:80%;" })<br /><br />
+                            @Html.LabelFor(m => m.ZipCode)<br />
+                            @Html.TextBoxFor(m => m.ZipCode, new { style = "width:80%;" })<br /><br />
+
+
+                        </td>
+                        <td style="width:25%">
+                            @Html.LabelFor(m => m.Mobile)<br />
+                            @Html.TextBoxFor(m => m.Mobile, new { style = "width:80%;" })<br /><br />
+                            @Html.LabelFor(m => m.City)<br />
+                            @Html.TextBoxFor(m => m.City, new { style = "width:80%;" })<br /><br />
+                            @Html.LabelFor(m => m.Phone)<br />
+                            @Html.TextBoxFor(m => m.Phone, new { style = "width:80%;" })<br /><br />
+
+
+                        </td>
+                    </tr>
+                </table>
+                <table align="left" style="width:60%">
+                    <caption>Personal Infos</caption>
+                    <tr>
+                        <td style="width:25%">
+                            @Html.LabelFor(m => m.FirstName)<br />
+                            @Html.TextBoxFor(m => m.FirstName, new { style = "width:55%;" })<br /><br />
+                            @Html.LabelFor(m => m.FatherName)<br />
+                            @Html.TextBoxFor(m => m.FatherName, new { style = "width:55%;" })<br /><br />
+                            @Html.LabelFor(m => m.Gender)<br />
+                            @Html.DropDownListFor(m => m.Gender, new SelectList(Model.Gender, "gender_id", "gender_descr"), "Select Gender", new { onchange = "ddListChangeGender()" })<br /><br />
+                            @Html.HiddenFor(m => m.selected_gen_id, new { @id = "gender_id" })
+                            @Html.LabelFor(m => m.Occupation)<br />
+                            @Html.TextBoxFor(m => m.Occupation, new { style = "width:55%;" })<br /><br />
+                        </td>
+                        <td style="width:25%">
+                            @Html.LabelFor(m => m.LastName)<br />
+                            @Html.TextBoxFor(m => m.LastName, new { style = "width:55%;" })<br /><br />
+                            @Html.LabelFor(m => m.DateOfBirth)<br />
+                            @Html.TextBoxFor(m => m.DateOfBirth, new { style = "width:55%;", placeholder = "dd/MM/yyyy" })<br /><br />
+                            @Html.LabelFor(m => m.FamilyStatus)<br />
+                            @Html.DropDownListFor(m => m.FamilyStatus, new SelectList(Model.FamilyStatus, "fs_id", "fs_descr"), "Select Family Status", new { onchange = "ddListChangeFS()" })<br /><br />
+                            @Html.HiddenFor(m => m.selected_fs_id, new { @id = "fs_id" })
+                            @Html.LabelFor(m => m.Amka)<br />
+                            @Html.TextBoxFor(m => m.Amka, new { style = "width:55%;" })<br /><br />
+
+                        </td>
+                    </tr>
+                </table>
+
+
+            </div>
+            <div class="form-group">
+                <div class="text-center">
+                    <button class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span>&nbsp;&nbsp;Submit Changes</button>
+                    @*<input type="submit" value="Submit" class="btn btn-success" />*@
+                </div>
+            </div>
+        </div>
+    }
+
+
+
+}
+
+<script type="text/javascript">
+    function ddListChangeGender() {
+        var selectedId = $('#Gender option:selected').val();
+        $("#gender_id").val(selectedId);
+    }
+    function ddListChangeFS() {
+        var selectedId = $('#FamilyStatus option:selected').val();
+        $("#fs_id").val(selectedId);
+    }
+    function ddListChangeDoc() {
+        var selectedId = $('#DocCategories option:selected').val();
+        $("#doc_cat_id").val(selectedId);
+    }
+</script>

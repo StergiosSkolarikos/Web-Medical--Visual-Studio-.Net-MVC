@@ -1,0 +1,49 @@
+﻿@model WebMedicalNew.Login
+
+@{
+    ViewBag.Title = "Login Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Login Page</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Use your credentials to log in to the system</h4>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-1" })*@
+            <div class="col-md-10">
+                <span class="glyphicon glyphicon-user text-info"></span>
+                @Html.TextBoxFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-1" })*@
+            <div class="col-md-10">
+                <span class="glyphicon glyphicon-lock text-info"></span>
+                @Html.PasswordFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <button class="btn btn-primary" onclick="window.location=@Url.Action("Index", "MainPage")">
+                    <span class="glyphicon glyphicon-log-in"></span>&nbsp; Login
+
+                    @*<input type="submit" value="Login" class="btn btn-success" />*@
+            </div>
+        </div>
+    </div>
+}
+
+
+<div>
+    @Html.ActionLink("Not a valid user?Use this link to register", "Index", "Register")
+</div>

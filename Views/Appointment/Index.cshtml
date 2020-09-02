@@ -1,0 +1,159 @@
+﻿@model WebMedicalNew.Appointment
+@{
+    ViewBag.Title = "Appointment";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    if (Login.usertype == 1)
+    {
+        <h2>Daily Appointments</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Username</th>
+                    <th scope="col">Full Name</th>
+                    <th scope="col">Amka</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Mobile</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Hours</th>
+                    <th scope="col">Appointment Category</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var c in Model.appointments)
+                {
+                    <tr>
+                        <td>@c.username</td>
+                        <td>@c.fullname</td>
+                        <td>@c.amka</td>
+                        <td>@c.email</td>
+                        <td>@c.mobile</td>
+                        <td>@c.date</td>
+                        <td>@c.hours</td>
+                        <td>@c.app_cat</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    }
+    else if (Login.usertype == 2)
+    {
+        <h2>Make an Appointment</h2>
+        <div>
+            Select Doctor Category : @Html.DropDownListFor(m => m.doc_cat, new SelectList(Model.doc_cat, "cat_id", "cat_descr"), "Select Category", new { onchange = "ddListChange()" })
+            <button class="btn btn-link"><span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp; Search</button>
+            @Html.HiddenFor(m => m.selected_cat_id, new { @id = "id" })
+        </div>
+        if (Model.selected_cat_id != 0)
+        {
+            <div>
+                Select Doctor: @Html.DropDownListFor(m => m.doctors, new SelectList(Model.doctors, "doc_id", "doc_name"), "Select Doctor", new { onchange = "ddListChangeDoc()" })
+                <button class="btn btn-link"><span class="glyphicon glyphicon-ok"></span>&nbsp;&nbsp; Choose</button>
+                @Html.HiddenFor(m => m.selected_doc_id, new { @id = "doc_id" })
+            </div>
+        }
+        if (Model.selected_doc_id != 0)
+        {
+            <div>
+                <table align="left" style="width:25%">
+                    <caption>Doctor Infos</caption>
+                    <tr>
+                        <td style="width:25%">
+                            @Html.Label("Full Name : ")
+                            @Html.DisplayFor(m => m.FullName)<br />
+                            @Html.Label("Doctor Category : ")
+                            @Html.DisplayFor(m => m.DocCategory)<br />
+                            @Html.Label("Bachelor : ")
+                            @Html.DisplayFor(m => m.Bachelor)<br />
+                            @Html.Label("Master : ")
+                            @Html.DisplayFor(m => m.Master)<br />
+                            @Html.Label("PHD : ")
+                            @Html.DisplayFor(m => m.PHD)<br />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <table align="right" style="width:50%">
+                    <caption>Appointment Infos</caption>
+                    <tr>
+                        <td style="width:50%">
+                            @Html.Label("Appointment Type")
+                            @Html.DropDownListFor(m => m.appCat, new SelectList(Model.appCat, "appCat_id", "appCat_descr"), "Select Appointment Type", new { onchange = "ddListChangeAppCat()" })<br />
+                            @Html.HiddenFor(m => m.selected_app_cat, new { @id = "appCat_id" })
+                            @Html.Label("Appointment Date")
+                            @Html.TextBoxFor(m => m.appDate, new { type = "date" })
+                            <button class="btn btn-link"><span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp; Choose Date</button><br />
+                            @Html.Label("Free Hours for Appointment")
+                            <button class="btn btn-link"><span class="glyphicon glyphicon-ok-circle"></span>&nbsp;&nbsp; Submit Request</button><br />
+                            @foreach (var c in Model.appHours)
+                            {
+                                @Html.RadioButtonFor(m => m.appHours, c.hour_id, new { onchange = "AppRadioButton()" }) @c.hour_descr <br />
+                            }
+
+                            @Html.HiddenFor(m => m.selected_appHour_id, new { @id = "hour_id" })
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <table align="center" style="width:25%">
+                    <caption>Contact Infos</caption>
+                    <tr>
+                        <td style="width:25%">
+                            @Html.Label("Email : ")
+                            @Html.DisplayFor(m => m.email)<br />
+                            @Html.Label("Mobile : ")
+                            @Html.DisplayFor(m => m.mobile)<br />
+                            @Html.Label("Office Address : ")
+                            @Html.DisplayFor(m => m.officeaddress)<br />
+                            @Html.Label("Office City : ")
+                            @Html.DisplayFor(m => m.officecity)<br />
+                            @Html.Label("Office Zip Code : ")
+                            @Html.DisplayFor(m => m.officetk)<br />
+                            @Html.Label("Office Phone : ")
+                            @Html.DisplayFor(m => m.officephone)<br />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+
+            </div>
+        }
+    }
+
+
+
+}
+<script type="text/javascript">
+    function ddListChange() {
+        var selectedId = $('#doc_cat option:selected').val();
+        $("#id").val(selectedId);
+    }
+    function ddListChangeDoc() {
+        var selectedId = $('#doctors option:selected').val();
+        $("#doc_id").val(selectedId);
+    }
+    function ddListChangeAppCat() {
+        var selectedId = $('#appCat option:selected').val();
+        $("#appCat_id").val(selectedId);
+    }
+    function AppRadioButton() {
+        var selectedId = $('[name="appHours"]:checked').val();
+        $("#hour_id").val(selectedId);
+    }
+</script>
+
+
+
+
+
